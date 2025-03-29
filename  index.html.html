@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تهنئة العيد</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        #canvas-container {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+        }
+        canvas {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+        input {
+            margin: 10px;
+            padding: 10px;
+            font-size: 18px;
+            text-align: center;
+            border: 2px solid #007bff;
+            border-radius: 5px;
+            font-family: 'Tajawal', sans-serif;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <h2>اكتب اسمك لتحصل على بطاقة تهنئة العيد</h2>
+    <input type="text" id="nameInput" placeholder="اكتب اسمك هنا">
+    <button onclick="generateGreeting()">إنشاء الصورة</button>
+    <br>
+    <div id="canvas-container">
+        <canvas id="greetingCanvas" width="500" height="300"></canvas>
+    </div>
+    <br>
+    <button onclick="downloadImage()">تحميل الصورة</button>
+
+    <script>
+        const canvas = document.getElementById('greetingCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.src = 'eid_greeting.png'; // استخدم صورتك الخاصة
+
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        };
+
+        function generateGreeting() {
+            const name = document.getElementById('nameInput').value;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            ctx.font = '30px Tajawal, sans-serif';
+            ctx.fillStyle = 'red';
+            ctx.textAlign = 'center';
+            ctx.fillText(name, canvas.width / 2, canvas.height - 20); // وضع الاسم في أسفل الصورة
+        }
+
+        function downloadImage() {
+            const link = document.createElement('a');
+            link.download = 'eid_greeting.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+    </script>
+</body>
+</html>
